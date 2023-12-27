@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="accounts">
+	<insert id="save">
+		INSERT INTO ACCOUNTS
+		(ID, NICKNAME, PLATFORM, ACCESS_TOKEN, PROFILE_IMAGE_URL)
+		VALUES 
+		(#{id}, #{nickname}, #{platform}, #{accessToken}, #{profileImageUrl})
+	</insert>
+	<select id="findById" resultType="account">
+		SELECT * FROM ACCOUNTS WHERE ID = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE ACCOUNTS
+		<set>
+			<if test="nickname != null">
+				NICKNAME = #{nickname },
+			</if>
+			<if test="accessToken != null">
+				ACCESS_TOKEN = #{accessToken },
+			</if>
+			<if test="profileImageUrl != null">
+				PROFILE_IMAGE_URL = #{profileImageUrl },
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address },
+			</if>
+			<if test="latitude != null">
+				LATITUDE = #{latitude },
+			</if>
+			<if test="longitude != null">
+				LONGITUDE = #{longitude},
+			</if>
+		</set>
+		WHERE ID = #{id }
+	</update>
+</mapper>
+
