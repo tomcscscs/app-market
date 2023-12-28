@@ -76,7 +76,7 @@ public class SignController {
 		return "redirect:/index";
 		
 	}
-}
+}//사인 컨트롤러
 
 	
 
