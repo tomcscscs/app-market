@@ -9,13 +9,22 @@
 		<div class="card-body d-flex flex-column justify-content-between">
 			<h5 class="card-title " style="word-break: keep-all;">오픈마켓에 오신
 				것을 환영합니다.</h5>
-			<div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item"><a
-						href="https://kauth.kakao.com/oauth/authorize?client_id=7ab771b649c094c990041f78323bcfd1&response_type=code&redirect_uri=http://192.168.151.10:8080${contextPath }/callback/kakao">
-							카카오로 로그인하기 </a></li>
-					<li class="list-group-item">네이버로 로그인하기</li>
-				</ul>
+			<div class="card-text text-center">
+				<p
+					style="border-radius: 12px; background-color: #FEE500; cursor: pointer;"
+					onclick="location.href='${kakaoLoginLink}'">
+					<img src="${contextPath }/resource/icon/kakao_login.png"
+						alt="카카오로 로그인하기" />
+
+				</p>
+				<p
+					style="border-radius: 12px; background-color: #03c75a; cursor: pointer"
+					onclick="location.href='#'">
+					<img src="${contextPath }/resource/icon/naver_login.png"
+						alt="카카오로 로그인하기" />
+
+				</p>
+
 			</div>
 		</div>
 	</div>
