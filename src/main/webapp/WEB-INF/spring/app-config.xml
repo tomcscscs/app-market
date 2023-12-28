@@ -30,7 +30,7 @@
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
 			value="jdbc:oracle:thin:@43.201.68.36:1521:xe" />
-		<property name="username" value="appmarket" />
+		<property name="username" value="openmarket" />
 		<property name="password" value="oracle" />
 	</bean>
 	<!-- jdbcTemplate configuration -->
@@ -54,7 +54,7 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	<mybatis-spring:scan
-		base-package="org.edupoll.cashflow.repository" />
+		base-package="org.edupoll.app.repository" />
 </beans>
 
 
