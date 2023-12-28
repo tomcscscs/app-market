@@ -19,7 +19,7 @@ public class Account {
 	private String accessToken;
 	private String profileImageUrl;
 	private String address;
-	private Long latitude;
-	private Long longitude;
+	private double latitude;
+	private double longitude;
 
 }
