@@ -1,27 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ include file="/WEB-INF/view/component/header.jspf"%>
 <div class="container mt-3">
 	<h4>내 정보</h4>
 	<div class="row gx-3">
 		<div class="col-md-4 p-2">
-			<h6>
-				<i class="bi bi-person-bounding-box"></i> 프로필 이미지
-			</h6>
-			<div>
-				<img src="${sessionScope.logonAccount.profileImageUrl }" width="200"
-					height="200" class="rounded-circle" />
-			</div>
-			<h6 class="mt-2">
-				<i class="bi bi-person-vcard"></i> 닉네임
-			</h6>
-			<div>
-				<input type="text" class="form-control"
-					value="${sessionScope.logonAccount.nickname }" />
-			</div>
-			<div>
-				<button type="submit" class="form-control btn btn-dark mt-2">변경</button>
-			</div>
+			<form method="post" enctype="multipart/form-data"
+				action="${contextPath }/settings/profile/info">
+				<h6>
+					<i class="bi bi-person-bounding-box"></i> 프로필 이미지
+				</h6>
+				<div>
+					<img
+						src="${fn:startsWith(sessionScope.logonAccount.profileImageUrl, '/upload') ? contextPath:'' }${sessionScope.logonAccount.profileImageUrl }"
+						width="200" height="200" class="rounded-circle"
+						style="cursor: pointer;"
+						onclick="document.querySelector('#profileImage').click();"
+						id="profileImageView" />
+				</div>
+				<div style="display: none">
+					<input type="file" class="form-control" id="profileImage"
+						accept="image/*" name="profileImage" />
+				</div>
+				<h6 class="mt-2">
+					<i class="bi bi-person-vcard"></i> 닉네임
+				</h6>
+				<div>
+					<input type="text" class="form-control"
+						value="${sessionScope.logonAccount.nickname }" name="nickname" />
+				</div>
+				<div>
+					<button type="submit" class="form-control btn btn-dark mt-2">변경</button>
+				</div>
+			</form>
 		</div>
 		<div class="col-md-8 p-2">
 			<h6>
@@ -50,7 +62,22 @@
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b2ac15002f8cc5e0eae8cf1b4f792c45&libraries=services"></script>
 <script>
+	// 이미지 미리보기 스크립트
+	document.querySelector("#profileImage").onchange= function(e) {
+		if(e.target.files[0]) {
+			var fileReader = new FileReader();
+			fileReader.readAsDataURL(e.target.files[0]);
+			fileReader.onload = function(e) {
+				console.log(e.target.result);
+				document.querySelector("#profileImageView").src = e.target.result;
+			}
+		}
+	};
 	
+	
+	
+	
+	// 지도 관련 스크립트
 	var lat = ${empty logonAccount.latitude ? 35.16014247399227 : logonAccount.latitude};
 	var lng = ${empty logonAccount.longitude ?  126.85159147037064 : logonAccount.longitude };
 	var container = document.querySelector("#map"); //지도를 담을 영역의 DOM 레퍼런스
