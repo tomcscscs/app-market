@@ -14,14 +14,14 @@
 					style="border-radius: 12px; background-color: #FEE500; cursor: pointer;"
 					onclick="location.href='${kakaoLoginLink}'">
 					<img
-						src="${contextPath }/resource/ico/kakao_login_medium_narrow.png"
+						src="${contextPath }/resource/icon/kakao_login_medium_narrow.png"
 						alt="카카오로 로그인하기" />
 
 				</p>
 				<p
 					style="border-radius: 12px; background-color: #03c75a; cursor: pointer"
 					onclick="location.href='#'">
-					<img src="${contextPath }/resource/ico/naver_login.png"
+					<img src="${contextPath }/resource/icon/naver_login.png"
 						alt="카카오로 로그인하기" />
 
 				</p>

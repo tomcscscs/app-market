@@ -40,7 +40,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="d-flex gap-1 align-items-center">
-								<img src="${sessionScope.logonAccount.profileImageUrl }"
+								<img src="${sessionScope.logonAccount.profileImageUrl}"
 									width="42" height="42" class="rounded-circle" />
 								<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
 									${sessionScope.logonAccount.nickname }</h5>
