@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="products">
+	<insert id="saveProduct">
+		<selectKey keyProperty="id" order="BEFORE" resultType="int">SELECT PRODUCTS_SEQ.NEXTVAL FROM DUAL</selectKey>
+		INSERT INTO PRODUCTS
+		VALUES 
+		(#{id}, #{title}, #{type}, #{price}, #{description},#{accountId}, 0)
+	</insert>
+	<insert id="saveProductImage">
+		INSERT INTO PRODUCT_IMAGES
+		VALUES 
+		(PRODUCT_IMAGES_SEQ.NEXTVAL, #{url}, #{path}, #{productId})
+	</insert>
+	
+
+</mapper>
+
