@@ -86,6 +86,6 @@ public class ProductController {
 		// newProduct안의 multipartFile 들을 업로드 처리하며 ProductImage 화
 		// dao 이용해서 save
 
-		return "product/register";
+		return "redirect:/product/"+product.getId();
 	}
 }
