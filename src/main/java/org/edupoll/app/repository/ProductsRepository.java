@@ -19,4 +19,8 @@ public class ProductsRepository {
 	public int saveProdcutImage(ProductImage one) {
 		return sqlSession.insert("products.saveProductImage", one);
 	}
+	
+	public Product findById(int id) {
+		return sqlSession.selectOne("products.findById", id);
+	}
 }

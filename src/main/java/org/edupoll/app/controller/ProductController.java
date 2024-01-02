@@ -13,10 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,20 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
 	private final ProductsRepository productsRepository;
 
+	
+	
+	
+	@GetMapping("/{productId}")
+	public String showProductDetail(@PathVariable int productId, Model model) {
+		Product found = productsRepository.findById(productId);
+		
+		model.addAttribute("product", found);
+		return "product/view";
+	}
+	
+	
+	
+	
 	@GetMapping("/register")
 	public String showProductReigster(Model model) {
 
@@ -63,7 +80,6 @@ public class ProductController {
 					.path(target.getAbsolutePath()) //
 					.productId(product.getId()) //
 					.build();
-			
 			productsRepository.saveProdcutImage(one);
 		}
 

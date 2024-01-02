@@ -4,7 +4,8 @@
 <div class="container mt-3">
 	<h4>내 물건팔기</h4>
 	<div class="border-top">
-		<form action="${contextPath }/product/register" method="post" enctype="multipart/form-data">
+		<form action="${contextPath }/product/register" method="post" enctype="multipart/form-data" 
+																				onsubmit="syncstate();">
 			<div class="my-3">
 				<input type="file" id="image" name="images" 
 					style="display: none"  accept="image/*" multiple />
@@ -63,7 +64,7 @@
 						</div>
 						 -->
 <script>
-
+	
 
 	[...document.querySelectorAll(".options")].forEach(function(elm) {
 		elm.onchange = function(e) {
@@ -82,11 +83,18 @@
 		}
 	});
 
+
+	const fileState = [];
+	
 	
 	document.querySelector("#image").onchange = function(e) {
 		const files = [...document.querySelector("#image").files]
+	
+		for(let f of files) {
+			fileState.push(f);
+		}
 		
-		console.log(files);
+		// console.log(fileState, files);
 		
 		files.forEach(function(file) {
 			const fileReader = new FileReader();
@@ -111,12 +119,14 @@
 				} 
 				
 			}
-			
 		});
-		
-		
 	}	
 
+	function syncstate() {
+		document.querySelector("#image").files = fileState;
+		window.alert(document.querySelector("#image").files.length);
+	}	
+	
 
 
 </script>

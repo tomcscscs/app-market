@@ -2,18 +2,52 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="products">
+	<resultMap type="product" id="productWithDetail">
+		<result column="id" property="id"/>
+		<result column="title" property="title"/>
+		<result column="type" property="type"/>
+		<result column="price" property="price"/>
+		<result column="description" property="description"/>
+		<result column="account_Id" property="accountId"/>
+		<result column="view_Cnt" property="viewCnt"/>
+		<association property="account" javaType="account">
+			<result property="id" column="account_id" />
+			<result property="nickname" column="nickname" />
+			<result property="platform" column="platform" />
+			<result property="profileImageUrl" column="profile_image_url" />
+			<result property="address" column="address" />
+			<result property="latitude" column="latitude" />
+			<result property="longitude" column="longitude" />
+		</association>
+		<collection property="images" ofType="productImage">
+			<result property="url" column="url"/>
+			<result property="productId" column="id"/>	
+		</collection>
+	</resultMap>
+
 	<insert id="saveProduct">
-		<selectKey keyProperty="id" order="BEFORE" resultType="int">SELECT PRODUCTS_SEQ.NEXTVAL FROM DUAL</selectKey>
+		<selectKey keyProperty="id" order="BEFORE" resultType="int">SELECT
+			PRODUCTS_SEQ.NEXTVAL FROM DUAL</selectKey>
 		INSERT INTO PRODUCTS
-		VALUES 
-		(#{id}, #{title}, #{type}, #{price}, #{description},#{accountId}, 0)
+		VALUES
+		(#{id}, #{title}, #{type}, #{price, jdbcType=NUMERIC}, #{description},#{accountId}, 0)
 	</insert>
 	<insert id="saveProductImage">
 		INSERT INTO PRODUCT_IMAGES
-		VALUES 
+		VALUES
 		(PRODUCT_IMAGES_SEQ.NEXTVAL, #{url}, #{path}, #{productId})
 	</insert>
-	
-
+	<select id="findById" resultMap="productWithDetail">
+		SELECT
+			p.*, 
+			a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
+			pi.url
+	 	FROM PRODUCTS p
+		JOIN ACCOUNTS a
+		ON a.id = p.account_id
+		LEFT JOIN PRODUCT_IMAGES pi
+		ON pi.PRODUCT_ID = p.ID WHERE
+		p.id = #{id}
+	</select>
 </mapper>
 
