@@ -107,7 +107,7 @@ public class ProductController {
 
 		pickRepository.deleteByOwnerAndTarget(one);
 
-		return "ok";
+		return "success";
 	}
 	
 	@GetMapping("/register")
@@ -136,7 +136,7 @@ public class ProductController {
 		for (MultipartFile file : newProduct.getImages()) {
 			if (file.isEmpty())
 				continue;
-			File dir = new File("d:\\upload\\productImage\\" + product.getId());
+			File dir = new File("c:\\upload\\productImage\\" + product.getId());
 			dir.mkdirs();
 			String fileName = UUID.randomUUID().toString();
 			File target = new File(dir, fileName);

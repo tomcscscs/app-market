@@ -95,12 +95,13 @@
 					<button class="btn btn-sm btn-dark">문의하기</button>
 				</div>
 			</div>
-			<!--  -->
-			<form action="${contextPath }/product/pick" method="post"
+			 <!-- 
+			<form action="${contextPath }/product/pick" method="post"  
 				id="pickform" style="display: none">
 				<input type="hidden" name="_method" value="" id="pickform_method" />
 				<input type="hidden" name="targetProductId" value="${product.id }" />
 			</form>
+			 -->
 		</div>
 	</div>
 </div>
@@ -117,12 +118,30 @@
 	<c:otherwise>
 		<script>
 			document.querySelector("#pick").onclick=function(evt) {
+				const xhr = new XMLHttpRequest();
 				if(this.className=='bi bi-heart-fill') {
-					document.querySelector("#pickform_method").value="delete";		
+					xhr.open("delete", 
+							"${contextPath}/product/pickAjax?targetProductId=${product.id}", true);
+					xhr.send();
 				}else {
-					document.querySelector("#pickform_method").value="post";
+					xhr.open("post", "${contextPath}/product/pickAjax", true);
+					xhr.setRequestHeader("content-type" , "application/x-www-form-urlencoded");
+					xhr.send("targetProductId=${product.id}");
 				}
-				document.querySelector("#pickform").submit();
+				// get : send()
+			
+				xhr.onreadystatechange= function() {
+					if(xhr.readyState==4 ) {
+						// window.alert(xhr.responseText);
+						if(xhr.responseText == 'success') {
+							if(document.querySelector("#pick").className=='bi bi-heart-fill') {
+								document.querySelector("#pick").className='bi bi-heart';
+							}else {
+								document.querySelector("#pick").className='bi bi-heart-fill';
+							}
+						}
+					}
+				}
 			}
 		</script>
 	</c:otherwise>
