@@ -1,5 +1,7 @@
 package org.edupoll.app.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.edupoll.app.model.Product;
 import org.edupoll.app.model.ProductImage;
@@ -23,4 +25,10 @@ public class ProductsRepository {
 	public Product findById(int id) {
 		return sqlSession.selectOne("products.findById", id);
 	}
+	
+	public List<Product> findAllOrderByIdDesc() {
+		return sqlSession.selectList("products.findAllOrderByIdDesc");
+	}
+	
+	
 }

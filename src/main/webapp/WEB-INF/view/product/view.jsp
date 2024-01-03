@@ -10,6 +10,7 @@
 		<div class="col-lg-6">
 			<div id="carouselExampleIndicators" class="carousel slide">
 				<div class="carousel-indicators">
+
 					<button type="button" data-bs-target="#carouselExampleIndicators"
 						data-bs-slide-to="0" class="active" aria-current="true"
 						aria-label="Slide 1"></button>
@@ -66,12 +67,19 @@
 				<div id="staticMap" style="width: 100%; height: 100%"></div>
 			</div>
 			<div class="d-flex gap-2 text-secondary" style="font-size: small;">
-				<span>관심 0</span> <span>조회 ${product.viewCnt }</span>
+				<span>관심 ${totalPick }</span> <span>조회 ${product.viewCnt }</span>
 			</div>
 			<!-- 가격 및 찜하기 버튼-->
 			<div class="d-flex my-2 align-items-center">
 				<div class="p-2 border-end">
-					<i class="bi bi-heart"></i>
+					<c:choose>
+						<c:when test="${picked }">
+							<i class="bi bi-heart-fill" id="pick" style="cursor: pointer;"></i>
+						</c:when>
+						<c:otherwise>
+							<i class="bi bi-heart" id="pick" style="cursor: pointer;"></i>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="flex-grow-1 p-2">
 					<c:choose>
@@ -87,13 +95,41 @@
 					<button class="btn btn-sm btn-dark">문의하기</button>
 				</div>
 			</div>
+			<!--  -->
+			<form action="${contextPath }/product/pick" method="post"
+				id="pickform" style="display: none">
+				<input type="hidden" name="_method" value="" id="pickform_method" />
+				<input type="hidden" name="targetProductId" value="${product.id }" />
+			</form>
 		</div>
 	</div>
 </div>
+<c:choose>
+	<c:when test="${empty sessionScope.logonAccount }">
+		<script>
+			document.querySelector("#pick").onclick=function(evt) {
+				if(window.confirm("로그인이 필요한 작업입니다.")) {
+					location.href="${contextPath}/signin";	
+				}
+			}
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			document.querySelector("#pick").onclick=function(evt) {
+				if(this.className=='bi bi-heart-fill') {
+					document.querySelector("#pickform_method").value="delete";		
+				}else {
+					document.querySelector("#pickform_method").value="post";
+				}
+				document.querySelector("#pickform").submit();
+			}
+		</script>
+	</c:otherwise>
+</c:choose>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b2ac15002f8cc5e0eae8cf1b4f792c45&libraries=services"></script>
 <script>
-
 	var staticMapContainer = document.getElementById('staticMap'); // 이미지 지도를 표시할 div
 	var staticMapOption = {
 		center : new kakao.maps.LatLng(${product.account.latitude}, ${product.account.longitude }), // 이미지 지도의 중심좌표

@@ -13,9 +13,10 @@
 		base-package="org.edupoll.app" />
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
-	<mvc:resources  mapping="/upload/**" location="file:c:\\upload\\" cache-period="0"/>
-	
-
+	<mvc:resources mapping="/upload/profileImage/**"
+		location="file:c:\\upload\\profileImage\\" cache-period="0" />
+	<mvc:resources mapping="/upload/productImage/**"
+		location="file:c:\\upload\\productImage\\" />
 
 	<!-- default handlerMapping & viewResolver config -->
 	<bean
@@ -44,7 +45,6 @@
 		<property name="username" value="openmarket" />
 		<property name="password" value="oracle" />
 	</bean>
-	
 	<!-- mybatis configuration -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">

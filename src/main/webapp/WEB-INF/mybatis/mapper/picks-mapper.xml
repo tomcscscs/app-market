@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="picks">
+	<insert id="savePick">
+		INSERT INTO PICKS VALUES(PICKS_SEQ.NEXTVAL,
+		#{ownerAccountId}, #{targetProductId})
+	</insert>
+	<delete id="deleteById">
+		DELETE FROM PICKS WHERE ID=#{id}
+	</delete>
+	<delete id="deleteByOwnerAndTarget">
+		DELETE FROM PICKS
+		WHERE OWNER_ACCOUNT_ID=#{ownerAccountId }
+		AND
+		TARGET_PRODUCT_ID=#{targetProductId }
+	</delete>
+	<select id="countByTarget" resultType="int">
+		SELECT COUNT(*) FROM PICKS
+		WHERE TARGET_PRODUCT_ID=#{targetProductId }
+	</select>
+	<select id="countByOwnerAndTarget" resultType="int">
+		SELECT COUNT(*)
+		FROM PICKS
+		WHERE OWNER_ACCOUNT_ID=#{ownerAccountId }
+		AND
+		TARGET_PRODUCT_ID=#{targetProductId }
+	</select>
+
+
+</mapper>
+

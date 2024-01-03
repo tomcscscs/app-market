@@ -49,5 +49,23 @@
 		ON pi.PRODUCT_ID = p.ID WHERE
 		p.id = #{id}
 	</select>
+	
+	<select id="findAllOrderByIdDesc" resultMap="productWithDetail">
+		SELECT * FROM (
+		SELECT
+			p.*, 
+			a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
+			pi.url
+	 	FROM PRODUCTS p
+		JOIN ACCOUNTS a
+		ON a.id = p.account_id
+		LEFT JOIN PRODUCT_IMAGES pi
+		ON pi.PRODUCT_ID = p.ID 
+		) ORDER BY ID DESC
+	</select>
+	
+	
+	
+	
 </mapper>
 
