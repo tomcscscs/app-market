@@ -78,6 +78,8 @@
 								<li class="nav-item"><a class="nav-link active"
 									aria-current="page" href="${contextPath }/product/register">내물건팔기</a></li>
 								<li class="nav-item"><a class="nav-link active"
+									aria-current="page" href="${contextPath }/product/register">찜 리스트</a></li>
+								<li class="nav-item"><a class="nav-link active"
 									aria-current="page" href="${contextPath }/signout">로그아웃</a></li>
 							</ul>
 						</c:otherwise>
