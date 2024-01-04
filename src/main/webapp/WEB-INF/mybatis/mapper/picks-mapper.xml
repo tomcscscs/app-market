@@ -11,7 +11,8 @@
 	</delete>
 	<delete id="deleteByOwnerAndTarget">
 		DELETE FROM PICKS
-		WHERE OWNER_ACCOUNT_ID=#{ownerAccountId }
+		WHERE
+		OWNER_ACCOUNT_ID=#{ownerAccountId }
 		AND
 		TARGET_PRODUCT_ID=#{targetProductId }
 	</delete>
@@ -26,6 +27,14 @@
 		AND
 		TARGET_PRODUCT_ID=#{targetProductId }
 	</select>
+
+	<select id="findAllPickById" resultType="picksAdkView">
+		select * from picks_adk_view where
+		picks_adk_view.owner_account_id=#{ownerAccountId}
+
+	</select>
+
+
 
 
 </mapper>

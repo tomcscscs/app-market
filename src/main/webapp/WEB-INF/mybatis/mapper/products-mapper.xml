@@ -3,13 +3,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="products">
 	<resultMap type="product" id="productWithDetail">
-		<result column="id" property="id"/>
-		<result column="title" property="title"/>
-		<result column="type" property="type"/>
-		<result column="price" property="price"/>
-		<result column="description" property="description"/>
-		<result column="account_Id" property="accountId"/>
-		<result column="view_Cnt" property="viewCnt"/>
+		<result column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="type" property="type" />
+		<result column="price" property="price" />
+		<result column="description" property="description" />
+		<result column="account_Id" property="accountId" />
+		<result column="view_Cnt" property="viewCnt" />
 		<association property="account" javaType="account">
 			<result property="id" column="account_id" />
 			<result property="nickname" column="nickname" />
@@ -20,17 +20,19 @@
 			<result property="longitude" column="longitude" />
 		</association>
 		<collection property="images" ofType="productImage">
-			<result property="url" column="url"/>
-			<result property="productId" column="id"/>	
+			<result property="url" column="url" />
+			<result property="productId" column="id" />
 		</collection>
 	</resultMap>
 
 	<insert id="saveProduct">
 		<selectKey keyProperty="id" order="BEFORE" resultType="int">SELECT
-			PRODUCTS_SEQ.NEXTVAL FROM DUAL</selectKey>
+			PRODUCTS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
 		INSERT INTO PRODUCTS
 		VALUES
-		(#{id}, #{title}, #{type}, #{price, jdbcType=NUMERIC}, #{description},#{accountId}, 0)
+		(#{id}, #{title}, #{type}, #{price,
+		jdbcType=NUMERIC}, #{description},#{accountId}, 0)
 	</insert>
 	<insert id="saveProductImage">
 		INSERT INTO PRODUCT_IMAGES
@@ -39,33 +41,42 @@
 	</insert>
 	<select id="findById" resultMap="productWithDetail">
 		SELECT
-			p.*, 
-			a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
-			pi.url
-	 	FROM PRODUCTS p
+		p.*,
+		a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
+		pi.url
+		FROM PRODUCTS p
 		JOIN ACCOUNTS a
 		ON a.id = p.account_id
-		LEFT JOIN PRODUCT_IMAGES pi
+		LEFT JOIN
+		PRODUCT_IMAGES pi
 		ON pi.PRODUCT_ID = p.ID WHERE
 		p.id = #{id}
 	</select>
-	
+
 	<select id="findAllOrderByIdDesc" resultMap="productWithDetail">
 		SELECT * FROM (
 		SELECT
-			p.*, 
-			a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
-			pi.url
-	 	FROM PRODUCTS p
+		p.*,
+		a.nickname, a.platform, a.profile_image_url, a.address, a.latitude, a.longitude,
+		pi.url
+		FROM PRODUCTS p
 		JOIN ACCOUNTS a
 		ON a.id = p.account_id
-		LEFT JOIN PRODUCT_IMAGES pi
-		ON pi.PRODUCT_ID = p.ID 
+		LEFT JOIN
+		PRODUCT_IMAGES pi
+		ON pi.PRODUCT_ID = p.ID
 		) ORDER BY ID DESC
 	</select>
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
 </mapper>
 

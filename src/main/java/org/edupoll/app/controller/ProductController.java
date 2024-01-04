@@ -2,11 +2,13 @@ package org.edupoll.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.edupoll.app.model.Account;
 import org.edupoll.app.model.NewProduct;
 import org.edupoll.app.model.Pick;
+import org.edupoll.app.model.PicksAdkView;
 import org.edupoll.app.model.Product;
 import org.edupoll.app.model.ProductImage;
 import org.edupoll.app.repository.PickRepository;
@@ -32,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductController {
 	private final ProductsRepository productsRepository;
 	private final PickRepository pickRepository;
+	
 
 	@GetMapping("/{productId}")
 	public String showProductDetail(@PathVariable int productId,
@@ -115,6 +118,8 @@ public class ProductController {
 
 		return "product/register";
 	}
+	
+	
 
 	@PostMapping("/register")
 	public String proceedAddNewProduct(@ModelAttribute NewProduct newProduct, @SessionAttribute Account logonAccount,
@@ -155,4 +160,21 @@ public class ProductController {
 
 		return "redirect:/product/" + product.getId();
 	}
+	
+	@GetMapping("/pickList")
+	public String showAllPickList(Model model, @SessionAttribute Account logonAccount) {
+		
+		List<PicksAdkView> list = pickRepository.findAllPickById(logonAccount.getId());
+		model.addAttribute("pickList", list);
+		
+		return "product/picklist";
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 }
