@@ -19,7 +19,7 @@ public class Product {
 	private int id;
 	private String title;
 	private String type;
-	private int price;
+	private Integer price;
 	private String description;
 	private String accountId;
 	private int viewCnt;

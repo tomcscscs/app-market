@@ -2,6 +2,8 @@ package org.edupoll.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.edupoll.app.model.Account;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;
 
@@ -66,6 +70,7 @@ public class ProductController {
 		return "redirect:/product/" + targetProductId;
 	}
 	
+	// 찜 등록 처리 하는 AJAX 처리 매핑
 	@PostMapping("/pickAjax")
 	@ResponseBody
 	public String proceedAjaxAddPick(@RequestParam int targetProductId, @SessionAttribute Account logonAccount) {
@@ -77,8 +82,14 @@ public class ProductController {
 		int cnt = pickRepository.countByOwnerAndTarget(one);
 		if (cnt == 0)
 			pickRepository.savePick(one);
-
-		return "success";
+		int updatedPicked = pickRepository.countByTarget(targetProductId);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("result", "success");
+		response.put("updatePick", updatedPicked);
+		
+		Gson gson = new Gson();
+		return gson.toJson(response);
 	}
 	
 
@@ -106,8 +117,13 @@ public class ProductController {
 				.build();
 
 		pickRepository.deleteByOwnerAndTarget(one);
-
-		return "success";
+		int updatedPicked = pickRepository.countByTarget(targetProductId);
+		Map<String, Object> response = new HashMap<>();
+		response.put("result", "success");
+		response.put("updatePick", updatedPicked);
+		
+		Gson gson = new Gson();
+		return gson.toJson(response);
 	}
 	
 	@GetMapping("/register")
@@ -136,7 +152,7 @@ public class ProductController {
 		for (MultipartFile file : newProduct.getImages()) {
 			if (file.isEmpty())
 				continue;
-			File dir = new File("c:\\upload\\productImage\\" + product.getId());
+			File dir = new File("d:\\upload\\productImage\\" + product.getId());
 			dir.mkdirs();
 			String fileName = UUID.randomUUID().toString();
 			File target = new File(dir, fileName);

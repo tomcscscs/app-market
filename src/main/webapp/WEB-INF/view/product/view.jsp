@@ -67,7 +67,7 @@
 				<div id="staticMap" style="width: 100%; height: 100%"></div>
 			</div>
 			<div class="d-flex gap-2 text-secondary" style="font-size: small;">
-				<span>관심 ${totalPick }</span> <span>조회 ${product.viewCnt }</span>
+				<span id="pickedCnt">관심 ${totalPick }</span> <span>조회 ${product.viewCnt }</span>
 			</div>
 			<!-- 가격 및 찜하기 버튼-->
 			<div class="d-flex my-2 align-items-center">
@@ -92,7 +92,9 @@
 					</c:choose>
 				</div>
 				<div class="p-2">
-					<button class="btn btn-sm btn-dark">문의하기</button>
+					<button class="btn btn-sm btn-dark" type="button"
+						onclick="location.href='${contextPath}/chat/link?productId=${product.id }'"
+					>문의하기</button>
 				</div>
 			</div>
 			 <!-- 
@@ -133,12 +135,15 @@
 				xhr.onreadystatechange= function() {
 					if(xhr.readyState==4 ) {
 						// window.alert(xhr.responseText);
-						if(xhr.responseText == 'success') {
+						var response = JSON.parse(xhr.responseText);
+						if(response.result == 'success') {
 							if(document.querySelector("#pick").className=='bi bi-heart-fill') {
 								document.querySelector("#pick").className='bi bi-heart';
 							}else {
 								document.querySelector("#pick").className='bi bi-heart-fill';
 							}
+							
+							document.querySelector("#pickedCnt").innerHTML = "관심 " + response.updatePick;
 						}
 					}
 				}

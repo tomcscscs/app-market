@@ -6,12 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-
+@Builder 
 public class Account {
 	private String id;
 	private String nickname;
@@ -21,5 +20,5 @@ public class Account {
 	private String address;
 	private Double latitude;
 	private Double longitude;
-
+	
 }

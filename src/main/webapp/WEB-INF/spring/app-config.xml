@@ -61,7 +61,7 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	<mybatis-spring:scan
-		base-package="org.edupoll.cashflow.repository" />
+		base-package="org.edupoll.app.repository" />
 </beans>
 
 

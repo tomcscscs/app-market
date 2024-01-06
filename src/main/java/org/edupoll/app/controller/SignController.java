@@ -72,11 +72,10 @@ public class SignController {
 			session.setAttribute("logonAccount", account);
 		}
 		
-		
 		return "redirect:/index";
 		
 	}
-}//사인 컨트롤러
+}
 
 	
 
